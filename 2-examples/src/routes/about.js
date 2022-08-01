@@ -1,9 +1,13 @@
-const express = require('express');
+import express from 'express';
+
+import { index, show } from '../app/controllers/AboutController.js';
+
 const router = express.Router();
 
-const aboutController = require('../app/controllers/AboutController');
+router.put('/:slug', show);
+router.delete('/:slug', show);
+router.post('/:slug', show);
+router.get('/:slug', show);
+router.use('/', index);
 
-router.use('/:slug' , aboutController.show);
-router.use('/' , aboutController.index);
-
-module.exports = router;
+export default router;

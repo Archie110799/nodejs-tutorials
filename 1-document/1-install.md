@@ -19,7 +19,6 @@ config  :   "start" : "nodemon --inspect index.js"
 ## open devtool
 chrome://inspect
 
-
 # Morgan https://www.npmjs.com/package/morgan
 HTTP request logger middleware for node.js
 ## install 
@@ -29,4 +28,27 @@ install :   npm install --save-dev morgan
 
 ## install
 npm install express-handlebars --save-dev
+
+# CORS - Cross-origin resource sharing
+- Chia sẻ tài nguyên của các domain khác nhau cho nhau
+
+Cors là 1 pakage hết sức tiện lợi, 
+cung cấp các middleware cho phép ta enable cors với nhiều option 
+để tùy chỉnh và ngắn gọn cho express.
+
+# Environment Variables
+- Setting các giá trị cho từng môi trường mà bạn mong muốn.
++ HTTP port to listen on
++ Đường dẫn và thư mục tệp của bạn
++ Chỉ định vào các môi trường development, staging, test, or production database
++ Các ví dụ khác có thể là URL tới server resources
+- Install: https://www.npmjs.com/package/dotenv
+
+# Lưu ý
+## NodeJS phiên bản < v12.0.0: chưa có hỗ trợ cú pháp import/export của ECMAScript modules (ES Modules)
+const jwt = require('jsonwebtoken')
+## NodeJS phiên bản v12.0.0 trở lên, NodeJS đã support ES Modules đầy đủ import/export
+import jwt from 'jsonwebtoken'
+## Recomend dùng NodeJS > v12
+Khai báo tại file package.json: "type": "module"
 
