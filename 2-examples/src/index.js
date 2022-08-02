@@ -10,10 +10,11 @@ import dotenv from 'dotenv'
 
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
-// import swaggerDocument from '../swagger.json' assert {type: "json"};
 import userRoutes from "./routes/user.js";
 import contactRoutes from "./routes/contact.js";
 import aboutRoutes from "./routes/about.js";
+
+import cookieParser from 'cookie-parser'
 
 const app = express();
 app.use(cors());
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+// Swagger
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
@@ -76,6 +78,8 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+
+// Router
 app.use('/user', userRoutes);
 app.use('/contact', contactRoutes);
 app.use('/about', aboutRoutes);
@@ -86,6 +90,27 @@ app.use(
   swaggerUi.setup(specs)
 );
 
+
+//Cookie
+app.use(cookieParser());
+// app.use(cookieParser(process.env.COOKIE_SECRET));
+// Chúng ta thêm một secret key vào nhằm để cho cookie nó mã hoá. 
+// Sau đó chúng ta không thể sử dụng req.cookies để lấy như cách trên 
+// mà chúng ta sẽ lấy những cookie mã hoá bằng req.signedCookies. 
+// Nó không khác gì nhưng Cookie sẽ vẫn hiển thị, 
+// nhưng nó có chữ ký, vì vậy nó có thể phát hiện xem khách hàng có sửa đổi cookie hay không. 
+
+app.get('/setCookie', (req, res)=> {
+    res.cookie('sites', 'manhph.com');
+    // res.cookie('sitesSecurity', 'manhph.com', {signed: true})
+    res.json({ok: 1})
+})
+
+app.get('/getCookie', (req, res)=> {
+    console.log('[ANONY] getCookie::::', req.cookies); 
+    console.log('[ANONY] getCookie::::signedCookies::::',req?.signedCookies?.sitesSecurity)
+    res.json({cookies: req.cookies, signedCookies: req?.signedCookies})
+})
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);

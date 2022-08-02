@@ -69,6 +69,51 @@ router.post("/", show);
 
 /**
  * @swagger
+ * /about/v1/{id}:
+ *   get:
+ *     summary: Retrieve a single JSONPlaceholder user.
+ *     description: Retrieve a single JSONPlaceholder user. Can be used to populate a user profile when prototyping or testing an API.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the user to retrieve.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         ...
+ */
+router.get("/:id", function (req, res) {
+  //...
+});
+
+/**
+ * @swagger
+ * /about/v1:
+ *   post:
+ *     summary: Create a JSONPlaceholder user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The user's name.
+ *                 example: Leanne Graham
+ *     responses:
+ *       201:
+ *         ...
+ */
+router.post("/", function (req, res) {
+  // ...
+});
+
+/**
+ * @swagger
  * /about/{id}:
  *  delete:
  *    description: Use to delete a record
@@ -82,6 +127,25 @@ router.post("/", show);
   //     .catch((error) => {
   //       res.status(204).json({ msg: error.message });
   //     });
+});
+
+/**
+ * @swagger
+ * /about/v2:
+ *   post:
+ *     summary: Create a JSONPlaceholder about.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/NewAbout'
+ *     responses:
+ *       201:
+ *         ...
+ */
+router.post("/", function (req, res) {
+  // ...
 });
 
 export default router;
