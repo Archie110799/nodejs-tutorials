@@ -12,6 +12,36 @@ router.use("/", index);
 
 /**
  * @swagger
+ * /about/{id}:
+ *   get:
+ *     summary: Retrieve a single JSONPlaceholder user.
+ *     description: Retrieve a single JSONPlaceholder user. Can be used to populate a user profile when prototyping or testing an API.
+ *     responses:
+ *       200:
+ *         description: A single user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: The user ID.
+ *                       example: 0
+ *                     name:
+ *                       type: string
+ *                       description: The user's name.
+ *                       example: Leanne Graham
+ */
+router.get("/:id", function (req, res) {
+  //...
+});
+
+/**
+ * @swagger
  * /about:
  *   post:
  *     summary: Create a JSONPlaceholder user.
@@ -35,7 +65,7 @@ router.use("/", index);
  *                       description: The user's name.
  *                       example: Leanne Graham
  */
-router.post("/:slug", show);
+router.post("/", show);
 
 /**
  * @swagger
@@ -45,7 +75,7 @@ router.post("/:slug", show);
  *    responses:
  *      '200':
  *        description: A successful response
- */ router.route("/v1/about/:id").delete((req, res) => {
+ */ router.route("/:id").delete((req, res) => {
   res.sendStatus(204);
   //   About.destroy({ where: req.params })
   //     .then((result) => res.sendStatus(204))
