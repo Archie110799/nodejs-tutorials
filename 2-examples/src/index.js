@@ -8,6 +8,9 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from 'dotenv' 
 
+import swaggerUi from 'swagger-ui-express'
+import swaggerJsdoc from 'swagger-jsdoc'
+// import swaggerDocument from '../swagger.json' assert {type: "json"};
 import userRoutes from "./routes/user.js";
 import contactRoutes from "./routes/contact.js";
 import aboutRoutes from "./routes/about.js";
@@ -41,9 +44,48 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Express API for JSONPlaceholder',
+    version: '1.0.0',
+    description:
+      'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+    license: {
+      name: 'Licensed Under MIT',
+      url: 'https://spdx.org/licenses/MIT.html',
+    },
+    contact: {
+      name: 'JSONPlaceholder',
+      url: 'https://jsonplaceholder.typicode.com',
+    },
+  },
+  servers: [
+    {
+      url: `http://localhost:${port}`,
+      description: 'Development server',
+    },
+  ],
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: [path.join(__dirname, "/routes/*.js")],
+};
+
+const specs = swaggerJsdoc(options);
+
 app.use('/user', userRoutes);
 app.use('/contact', contactRoutes);
 app.use('/about', aboutRoutes);
+
+app.use(
+  '/api',
+  swaggerUi.serve, 
+  swaggerUi.setup(specs)
+);
+
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
